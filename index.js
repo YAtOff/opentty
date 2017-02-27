@@ -38,10 +38,13 @@ function openTTY() {
 }
 
 function rawConsole_win32() {
-    var fd
+    var fd;
+    var flag = (fs.constants !== undefined) ?
+            fs.constants.O_RDWR :
+            _constants.O_RDWR;
 
     try {
-        fd = _fs.open('CONIN$', _constants.O_RDWR, 438);
+        fd = _fs.open('CONIN$', flag, 438);
         var tty = new _TTY(fd, true);
         tty.setRawMode(true);
     } catch (e) {
